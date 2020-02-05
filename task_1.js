@@ -1,5 +1,5 @@
 
-'use strict'
+'use strict';
 //пример 1
 let a = 1, b = 1, c, d;
 c = ++a;

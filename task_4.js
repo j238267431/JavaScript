@@ -1,15 +1,24 @@
+'use strict';
 
-console.log("let mode = \"normal\" - да");
-console.log("let my_valu3 = 102 - да но не соблюден рекомендованный стиль camel case");
-console.log("let 3my_value3 = \"102\" - нет, название не должно начтнаться на цифру");
-console.log("__hello__ = \"world\" - да");
-console.log("let $$$ = \"money\" - да");
-console.log("let !0_world = true - нет восклицательный знак не разрешается использовать в начале имени переменной");
+function getSum(a,b){
+   return a+b;
+}
+function getMultiplying(a,b){
+   return a*b;
+}
+function getDividing(a,b){
+   return a/b;
+}
+function getSubstraction(a,b){
+   return a-b;
+}
 
-// 4 Напишите, являются ли данные имена переменных корректными:
-// let mode = "normal" - да;
-// let my_valu3 = 102 - да но не соблюден рекомендованный стиль camel case;
-// let 3my_value3 = "102" - нет, название не должно начинаться на цифру;
-// let __hello__ = "world" - да;
-// let $$$ = "money" - да;
-// let !0_world = true - нет восклицательный знак не разрешается использовать в начале имени переменной;
+console.log(getSum(2,3));
+console.log(getMultiplying(3,4));
+console.log(getDividing(5,3));
+console.log(getSubstraction(10,7));
+// 4 Реализовать основные 4 арифметические операции (+, -, /, *) в виде функций с двумя
+// параметрами. Т.е. например, функция для сложения должна принимать два числа, складывать их
+// и возвращать результат.
+// Обязательно использовать оператор return.
+
