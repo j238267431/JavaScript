@@ -3,7 +3,12 @@
 let arg1 = Number(prompt('введите первое число'));
 let arg2 = Number(prompt('введите второе число 2'));
 
-
+/**
+ * Функция для расчета значения в зависимости от выбранного типа операции: сложение, вычитание, деление и умножение
+ * @param {Number} arg1 
+ * @param {Number} arg2 
+ * @param {String} operation 
+ */
 function mathOperation(arg1, arg2, operation){
    switch (operation){
       case 'Sum':

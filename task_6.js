@@ -1,7 +1,6 @@
 'use strict';
 
 let money = Number(prompt('введите сумму которую хотите положить на счет'))
-
 let lenght = String(money).length
 let lastNum = Number(String(money).charAt(lenght-1))
 let endString = 'рубля'
