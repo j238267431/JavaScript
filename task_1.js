@@ -7,40 +7,37 @@ function GetObject() {
 
 }
 
-function getNUmber() {
-    return Number(prompt('введите целое число от 0 - 999'));
-}
-
-function checkNumber() {
-    let entNumber = getNUmber();
-    if (isNaN(entNumber) || !Number.isInteger(entNumber)) {
-        alert('было введено не число, либо не целое число');
-        return checkNumber();
-    }
-    return String(entNumber)
-}
-
-// getPartsOfNumber();
-let entNumb = checkNumber()
 let hundreds = null;
 let units = null;
 let tens = null;
 
-if (entNumb.length == 3){
-   units = Number(entNumb.charAt(2));
-   tens = Number(entNumb.charAt(1));
-   hundreds = Number(entNumb.charAt(0));
-}else if (entNumb.length == 2) {
-   units = Number(entNumb.charAt(1));
-   tens = Number(entNumb.charAt(0));
-   hundreds = 0;
-}else{
-   units = Number(entNumb.charAt(0));
-   tens = 0;
-   hundreds = 0;
-}
+function checkNumber() {
+    let entNumber = Number(prompt('введите целое число от 0 - 999'));
+    if (isNaN(entNumber) || !Number.isInteger(entNumber) || entNumber < 0 || entNumber > 999) {
+        console.log(
+            'было введено не число, либо не целое число, либо число за пределами диапазона ' +
+            '0-999'
+        );
+        return {};
+    }
+    entNumber = String(entNumber)
+    if (entNumber.length == 3) {
+        units = Number(entNumber.charAt(2));
+        tens = Number(entNumber.charAt(1));
+        hundreds = Number(entNumber.charAt(0));
+    } else if (entNumber.length == 2) {
+        units = Number(entNumber.charAt(1));
+        tens = Number(entNumber.charAt(0));
+        hundreds = 0;
+    } else {
+        units = Number(entNumber.charAt(0));
+        tens = 0;
+        hundreds = 0;
+    }
 
-const numberObject = new GetObject(units)
+}
+checkNumber()
+const numberObject = new GetObject()
 console.log(numberObject)
 
 // 1 Написать функцию, преобразующую число в объект. Передавая на вход число в
