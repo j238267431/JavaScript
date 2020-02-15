@@ -1,0 +1,3 @@
+riddlesQty = {
+   quantity: 5
+}
