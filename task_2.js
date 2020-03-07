@@ -1,17 +1,30 @@
 'use strict';
-a = 2;
-let x = 1 + (a *= 2);
 
-// x = 5 a = 4
-// переменной a присваивается значение 2
-//далее в первую очередь выполняется действие в скобках
-// 2 умножается на 2 и переменой a присваивается
-//новое значение a становится равной 4
-// далее к 4 прибавляется 1 и полученный резкльтат
-// записывается в переменную x. таким образом переменная 
-// x становится равной 5
-
-// 2 Чему будут равны переменные x и a в примере ниже? Написать почему так произошло
-// (описать последовательность действий).
-// let a = 2;
-// let x = 1 + (a *= 2);
+const post = {
+    author: "John", //вывести этот текст
+    postId: 23,
+    comments: [
+        {
+            userId: 10,
+            userName: "Alex",
+            text: "lorem ipsum",
+            rating: {
+                likes: 10,
+                dislikes: 2 //вывести это число
+            }
+        }, 
+        {
+            userId: 5, //вывести это число
+            userName: "Jane",
+            text: "lorem ipsum 2", //вывести этот текст
+            rating: {
+                likes: 3,
+                dislikes: 1
+            }
+        }
+    ]
+}
+console.log(post.author)
+console.log(post.comments[0].rating.dislikes)
+console.log(post.comments[1].userId)
+console.log(post.comments[1].text)

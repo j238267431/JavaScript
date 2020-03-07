@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+
+    </div>
+
+    <script>
+        'use strict';
+        
+        function createButton(textOnButton) {
+            return `<button>${textOnButton}</button>`;
+        }
+
+        const divEl = document.querySelector('div');
+
+        for (let i = 0; i <= 5; i++) {
+            let button = createButton(`Кнопка №${i}`);
+            divEl.insertAdjacentHTML("afterbegin", button);
+        }
+
+        divEl.addEventListener('click', function(event) {
+            let target = event.target;
+            if (target.tagName === 'BUTTON') {
+                alert(target.innerText);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

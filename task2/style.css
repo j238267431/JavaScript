@@ -1,0 +1,17 @@
+
+.product{
+   display: flex;
+   flex-direction: column;
+   margin-left: 10px;
+   flex-wrap: wrap;
+}
+.desc{
+   display: none;
+   width: 100px;
+}
+.desc_show{
+   display: block;
+}
+.img_hide{
+   display: none;
+}
