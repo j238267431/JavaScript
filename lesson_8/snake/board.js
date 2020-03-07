@@ -10,9 +10,9 @@ class Board {
     this.snake = snake
     this.game = game
   }
-/**
- * отрисовывает поле игры
- */
+  /**
+   * отрисовывает поле игры
+   */
   renderBoard () {
     this.boardEl.innerHTML = ''
     for (let i = 0; i < this.settings.rowsCount; i++) {
@@ -30,12 +30,17 @@ class Board {
   renderSnake () {
     let snakeBody = this.snake.body
     snakeBody.forEach(element => {
-      let cell = document.querySelector(`tr:nth-child(${element.y}) td:nth-child(${element.x})`)
-      cell.classList.add('snakeBody')
-      this.game.isWin()
+      let cell = document.querySelector(
+        `tr:nth-child(${element.y}) td:nth-child(${element.x})`
+      )
+
+      if (!this.snake.snakeCollapse) {
+        cell.classList.add('snakeBody')
+      } else {
+         let message = document.getElementById('message');
+         message.innerHTML = 'you are lost';
+      }
     })
+    this.game.isWin()
   }
-
-
-
 }

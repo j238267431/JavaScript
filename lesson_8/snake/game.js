@@ -19,11 +19,12 @@ class Game {
       this.pause.bind(this)
     )
     document.addEventListener('keydown', this.newDirection.bind(this))
+    this.renderScore()
   }
 
   start () {
     if (this.status.condition == 'paused') {
-      this.status.isPlaying()
+      this.status.setPlaying()
       this.tickIdentifier = setInterval(
         this.doTick.bind(this),
         1000 / this.settings.speed
@@ -55,37 +56,77 @@ class Game {
           x: goDownAndUpXCoord,
           y: goUpAndDownYCoord + 1
         })
+        this.isOutOfBoard()
+        this.isSnakeEatItself(goDownAndUpXCoord, goUpAndDownYCoord + 1)
         break
       case 'up':
         this.snake.body.push({
           x: goDownAndUpXCoord,
           y: goUpAndDownYCoord - 1
         })
+        this.isOutOfBoard()
+        this.isSnakeEatItself(goDownAndUpXCoord, goUpAndDownYCoord - 1)
         break
       case 'left':
         this.snake.body.push({
           x: goLeftAndRightXCoord - 1,
           y: goLeftAndRightYCoord
         })
+        this.isOutOfBoard()
+        this.isSnakeEatItself(goLeftAndRightXCoord - 1, goLeftAndRightYCoord)
         break
       case 'right':
         this.snake.body.push({
           x: goLeftAndRightXCoord + 1,
           y: goLeftAndRightYCoord
         })
+        this.isOutOfBoard()
+        this.isSnakeEatItself(goLeftAndRightXCoord + 1, goLeftAndRightYCoord)
         break
     }
   }
 
+  isSnakeEatItself (x, y) {
+    for (let i = 0; i < this.snake.body.length - 2; i++) {
+      if (this.snake.body[i].x === x && this.snake.body[i].y === y) {
+        this.snake.snakeCollapse = true
+        this.status.condition = `paused`
+        if (!this.status.isPlaying()) {
+          this.pause()
+        }
+      }
+    }
+  }
+
+  isOutOfBoard () {
+    switch (this.snake.body[this.snake.body.length - 1].x) {
+      case this.settings.colsCount + 1:
+        this.snake.body[this.snake.body.length - 1].x = 1
+        break
+      case 0:
+        this.snake.body[this.snake.body.length - 1].x = 21
+        break
+    }
+    switch (this.snake.body[this.snake.body.length - 1].y) {
+      case this.settings.rowsCount + 1:
+        this.snake.body[this.snake.body.length - 1].y = 1
+        break
+      case 0:
+        this.snake.body[this.snake.body.length - 1].y = 21
+        break
+    }
+  }
   /**
    * удаляет хвост змеи
    */
   removeSnakeTail () {
-    let cell = document.querySelector(
-      `tr:nth-child(${this.snake.body[0].y}) td:nth-child(${this.snake.body[0].x})`
-    )
-    cell.classList.remove('snakeBody')
-    this.snake.body.splice(0,1)
+    if (!this.snake.snakeCollapse) {
+      let cell = document.querySelector(
+        `tr:nth-child(${this.snake.body[0].y}) td:nth-child(${this.snake.body[0].x})`
+      )
+      cell.classList.remove('snakeBody')
+      this.snake.body.splice(0, 1)
+    }
   }
   /**
    *
@@ -127,29 +168,45 @@ class Game {
   }
   eatFood () {
     let snakeHead = this.snake.body[this.snake.body.length - 1]
-    if (snakeHead.x === this.food.x && snakeHead.y === this.food.y){
-       this.snakeGrow(snakeHead)
-       this.food.removeFood()     
-       this.food.placeFood(this.board, this.settings, this.snake)
+    if (snakeHead.x === this.food.x && snakeHead.y === this.food.y) {
+      this.snakeGrow(snakeHead)
+      this.scoreIncrease()
+      this.food.removeFood()
+      this.food.placeFood(this.board, this.settings, this.snake)
     }
   }
-  snakeGrow(){
-     let tail = this.snake.body
-   tail.unshift({x: tail[0].x, y: tail[0].y})
+  snakeGrow () {
+    let tail = this.snake.body
+    tail.unshift({ x: tail[0].x, y: tail[0].y })
   }
 
-  isWin(){
-     if (this.bodyLenght()){
-        let message = document.getElementById('message')
-        message.innerHTML = 'You are win'
-        this.status.condition = `paused`
-        if(!this.status.isPlaying()){
-           this.pause()
-        }
-     }
-     
+  isWin () {
+    if (this.bodyLenght()) {
+      this.disableStartBtn()
+      let message = document.getElementById('message')
+      message.innerHTML = 'You are win'
+      this.status.condition = `paused`
+      if (!this.status.isPlaying()) {
+        this.pause()
+      }
+    }
   }
-  bodyLenght(){
-   return this.snake.body.length === this.settings.winLength
+  bodyLenght () {
+    return (this.snake.body.length === this.settings.winLength && document.getElementById('message').innerHTML === '')
+  }
+
+  scoreIncrease(){
+     let currentScore = document.getElementById('currentScore')
+     currentScore.innerHTML = this.snake.body.length
+  }
+  renderScore(){
+   let currentScore = document.getElementById('currentScore')
+   currentScore.innerHTML = this.snake.body.length
+   let gameScore = document.getElementById('gameScore')
+   gameScore.innerHTML = this.settings.winLength
+  }
+  disableStartBtn(){
+     let startButton = document.getElementById('startBtn')
+     startButton.setAttribute('disabled', 'disabled')
   }
 }
